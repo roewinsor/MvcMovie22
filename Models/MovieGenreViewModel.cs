@@ -9,5 +9,8 @@ namespace MvcMovie.Models
         public SelectList Genres;
         public string MovieGenreFilter { get; set; }
         public string SearchString { get; set; }
+        public string SortBy { get; set; }
     }
+
+
 }

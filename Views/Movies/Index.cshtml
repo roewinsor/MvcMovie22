@@ -14,6 +14,14 @@
         <select asp-for="MovieGenreFilter" asp-items="Model.Genres">
             <option value="">All</option>
         </select>
+        Sort By:
+        <select asp-for="SortBy" >
+            <option value="Title">Title</option>
+            <option value="ReleaseDate">Release Date</option>
+            <option value="Price">Price</option>
+            <option value="Rating">Rating</option>
+            <option value="Genre">Genre</option>
+        </select>
 
         Title: <input type="text" asp-for="SearchString" />
         <input type="submit" value="Filter" />

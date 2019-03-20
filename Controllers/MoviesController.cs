@@ -6,21 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
+using MvcMovie.Services;
 
 namespace MvcMovie.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly MvcMovieContext _context;
+        private readonly MediaWIki _mediaWiki;
 
-        public MoviesController(MvcMovieContext context)
+        public MoviesController(MvcMovieContext context, MediaWIki mediaWiki)
         {
             _context = context;
+            _mediaWiki = mediaWiki;
         }
 
         #region snippet_SearchGenre
         // GET: Movies
-        public async Task<IActionResult> Index(string movieGenre, string searchString)
+        public async Task<IActionResult> Index(string movieGenreFilter, string searchString, string sortBy)
         {
             #region snippet_LINQ
             // Use LINQ to get list of genres.
@@ -32,14 +35,34 @@ namespace MvcMovie.Controllers
             var movies = from m in _context.Movie
                          select m;
 
+            switch (sortBy)
+            {
+                case "ReleaseDate":
+                    movies = movies.OrderByDescending(m => m.ReleaseDate);
+                    break;
+                case "Rating":
+                    movies = movies.OrderBy(m => m.Rating);
+                    break;
+                case "Price":
+                    movies = movies.OrderBy(m => m.Price);
+                    break;
+                case "Genre":
+                    movies = movies.OrderBy(m => m.Genre);
+                    break;
+                default:
+                    movies = movies.OrderBy(m => m.Title);
+                    break;
+            }
+
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 movies = movies.Where(s => s.Title.Contains(searchString));
             }
 
-            if (!string.IsNullOrEmpty(movieGenre))
+            if (!string.IsNullOrEmpty(movieGenreFilter))
             {
-                movies = movies.Where(x => x.Genre == movieGenre);
+                movies = movies.Where(x => x.Genre == movieGenreFilter);
             }
 
             var movieGenreVM = new MovieGenreViewModel
@@ -72,8 +95,20 @@ namespace MvcMovie.Controllers
             {
                 return NotFound();
             }
+       
+            var wikiPage =  await _mediaWiki.GetMovieWikiDetails(movie.Title, null);
+            var movieView = new MovieViewDetails
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Rating = movie.Rating,
+                Price = movie.Price,
+                ReleaseDate = movie.ReleaseDate,
+                WikiTitle = wikiPage
 
-            return View(movie);
+            };
+
+            return View(movieView);
         }
         #endregion
 
@@ -100,6 +135,7 @@ namespace MvcMovie.Controllers
         {
             if (ModelState.IsValid)
             {
+                _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -127,7 +163,7 @@ namespace MvcMovie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -181,7 +217,7 @@ namespace MvcMovie.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movie.FirstOrDefaultAsync();
+            var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
             _context.Movie.Remove(movie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

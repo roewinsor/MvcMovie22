@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
+using MvcMovie.Services;
 
 namespace MvcMovie
 {
@@ -41,6 +42,7 @@ namespace MvcMovie
 
             services.AddDbContext<MvcMovieContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
+            services.AddScoped<MediaWIki>();
         }
 #endregion
 
