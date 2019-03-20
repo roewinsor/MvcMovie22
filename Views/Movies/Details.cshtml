@@ -1,4 +1,4 @@
-﻿@model MvcMovie.Models.Movie
+﻿@model MvcMovie.Models.MovieViewDetails
 
 @{
     ViewData["Title"] = "Details";
@@ -36,6 +36,9 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WikiTitle)
         </dd>
     </dl>
 </div>
