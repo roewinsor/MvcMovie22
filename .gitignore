@@ -36,3 +36,17 @@ obj/Debug/netcoreapp2.2/Razor/Views/Movies/EditOriginal.g.cshtml.cs
 obj/Debug/netcoreapp2.2/Razor/Views/Movies/Index.g.cshtml.cs
 obj/Debug/netcoreapp2.2/Razor/Views/Movies/IndexFormGenreNoRating.g.cshtml.cs
 obj/Debug/netcoreapp2.2/Razor/Views/Movies/IndexGenreRating.g.cshtml.cs
+obj/project.assets.json
+obj/MvcMovie.csproj.nuget.g.props
+obj/MvcMovie.csproj.nuget.cache
+obj/Debug/netcoreapp2.2/Razor/Views/Shared/Error.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Shared/_ValidationScriptsPartial.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Shared/_Layout.org.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Shared/_Layout.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Shared/_CookieConsentPartial.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Movies/IndexOriginal.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Movies/IndexGet.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Movies/IndexGenreRating.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Movies/IndexFormGenreNoRating.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Movies/Index.g.cshtml.cs
+obj/Debug/netcoreapp2.2/Razor/Views/Movies/EditOriginal.g.cshtml.cs
